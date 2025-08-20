@@ -1,23 +1,17 @@
-class Tree:
-    def __init__(self):
-        self.left = None
-        self.right = None
-        self.data = None
-
-def parseNumber(string):
+def parseNumber(number, string):
     negative = False
-    if string[0] == "-": negative = True
     i = 0
+    if string[0] == "-":
+        negative = True
     for char in string:
         i += 1
-        if char not in "0123456789":
-            if string[:i] is "": return print("Beklenemeyen girdi.")
-            if negative == True: return [-1*int(string[:i]), string[i:]]
-            return  [int(string[:i]), string[i:]]
+        if char not in "-0123456789":
+            if negative == True: return [-1*int(string[1:i]), string[i:].strip()]
+            return  [int(string[:i]), string[i:].strip()]
     
-print("Hesap Makinesi")
-input = input("\nLütfen işlemi giriniz:")
 
-        
-number = parseNumber(input)
+print("Hesap Makinesi")
+expr = input("\nLütfen işlemi giriniz:")
+    
+number = parseNumber(0, expr)
 print(number[0] + 1)
