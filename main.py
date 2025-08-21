@@ -1,4 +1,4 @@
-def parseNumber(answer, string):
+def parseNumber(string):
     negative = False
     i = 0
     if string[0] == "-":
@@ -8,29 +8,19 @@ def parseNumber(answer, string):
         if negative == True and i == 1:
             continue
         if char not in "0123456789":
-            return  [int(string[:i]), string[i:].strip()]
+            break
+    if string[i:].strip() != '':
+        return parseOperation(string[i:].strip())+int(string[:i])
+    return int(string[:i])
 
-def parseOperation(answer, string):
-    addition, subtract = False, False
-    i = 0
+def parseOperation( string):
     if string[0] == "+":
-        addition = True
+        return parseNumber(string[1:].strip())
     elif string[0] == "-":
-        subtract = True
-    for char in string:
-        i += 1
-        if negative == True and i == 1:
-            continue
-        if char not in "0123456789":
-            return  [int(string[:i]), string[i:].strip()]
-
-
-# Expr = Number (("+" | "-") Number)*
-# Term = Number
-# Number = [0-9]+
+        return parseNumber(string[1:].strip())*-1
 
 print("Hesap Makinesi")
 expr = input("\nLütfen işlemi giriniz:")
     
-number = parseNumber(0, expr)
-print(number[0] + 1)
+number = parseNumber(expr)
+print(number)
