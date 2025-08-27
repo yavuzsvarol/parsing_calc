@@ -1,8 +1,8 @@
 class Tree:
-    def __init__(self):
+    def __init__(self, data=None):
         self.left = None
         self.right = None
-        self.data = None
+        self.data = data
 
 def tokenize(expr):
     tokens = []
@@ -37,16 +37,22 @@ def tokenize(expr):
 while True:
     print("\nHesap Makinesi")
     expr = input("Lütfen işlemi giriniz: ") 
-
     if not expr:
         print("Hatalı girdi: Boş işlem")
         continue
     tokens = tokenize(expr)
-
-    for token in tokens:
-
-        pass
-        
+    for i in range(1, len(tokens), 2):
+        if i == 1:
+            root = Tree(tokens[i-1])
+        current = Tree(tokens[i])
+        right = Tree(tokens[i+1])
+        current.left = root
+        current.right = right
+        root = current
+    
+    cursor = root
+    while root.left != None:
+        cursor = root.left
 
 
 
