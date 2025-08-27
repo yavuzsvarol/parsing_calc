@@ -1,3 +1,55 @@
+class Tree:
+    def __init__(self):
+        self.left = None
+        self.right = None
+        self.data = None
+
+def tokenize(expr):
+    tokens = []
+    i = 0
+    while i < len(expr):
+        if expr[i] == ' ':
+            i += 1
+            continue
+        if expr[i] in '+-':
+            k = i - 1
+            while k >= 0 and expr[k] == ' ':
+                k -= 1
+            if k < 0 or expr[k] in '+-*/(':
+                j = i + 1
+                while j < len(expr) and expr[j].isdigit():
+                    j += 1
+                tokens.append(expr[i:j])
+                i = j
+                continue
+            else:
+                tokens.append(expr[i])
+        elif expr[i].isdigit():
+            j = i
+            while j < len(expr) and expr[j].isdigit():
+                j += 1
+            tokens.append(expr[i:j])
+            i = j
+            continue
+        i += 1
+    return tokens
+
+while True:
+    print("\nHesap Makinesi")
+    expr = input("Lütfen işlemi giriniz: ") 
+
+    if not expr:
+        print("Hatalı girdi: Boş işlem")
+        continue
+    tokens = tokenize(expr)
+
+    for token in tokens:
+
+        pass
+        
+
+
+
 def parseNumber(string):
     if not string:
         return "Hatalı girdi: Boş işlem"
