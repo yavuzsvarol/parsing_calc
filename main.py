@@ -34,6 +34,17 @@ def tokenize(expr):
         i += 1
     return tokens
 
+def tree_traverse(root):
+    if root.left != None:
+        tree_traverse(root.left)
+    if root.left == None:
+        return
+    if root.data == "+":
+        root.data = root.left.data + root.right.data
+    elif root.data == "-":
+        root.data = root.left.data - root.right.data
+    return root.data
+
 while True:
     print("\nHesap Makinesi")
     expr = input("Lütfen işlemi giriniz: ") 
@@ -43,49 +54,11 @@ while True:
     tokens = tokenize(expr)
     for i in range(1, len(tokens), 2):
         if i == 1:
-            root = Tree(tokens[i-1])
+            root = Tree(int(tokens[i-1]))
         current = Tree(tokens[i])
-        right = Tree(tokens[i+1])
+        right = Tree(int(tokens[i+1]))
         current.left = root
         current.right = right
         root = current
-    
-    cursor = root
-    while root.left != None:
-        cursor = root.left
 
-
-
-def parseNumber(string):
-    if not string:
-        return "Hatalı girdi: Boş işlem"
-    negative = False
-    i = 0
-    if string[0] == "-":
-        negative = True
-    for char in string:
-        i += 1
-        if negative == True and i == 1:
-            continue
-        if char not in "0123456789":
-            i -= 1
-            break
-    try:
-        if string[i:].strip() != '':
-            return parseOperation(string[i:].strip())+int(string[:i])
-        return int(string[:i])
-    except:
-        return "Hatalı girdi."
-
-def parseOperation(string):
-    if not string:
-        return "Hatalı girdi: Boş işlem"
-    if string[0] == "+":
-        return parseNumber(string[1:].strip())
-    elif string[0] == "-":
-        return parseNumber(string[1:].strip())*-1
-
-while True:
-    print("\nHesap Makinesi")
-    expr = input("Lütfen işlemi giriniz: ") 
-    print("\nCevap: ", parseNumber(expr))
+    print("Sonuç: ", tree_traverse(root))
